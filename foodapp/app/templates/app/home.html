@@ -1,0 +1,118 @@
+{%extends 'app/base.html'%}
+{%load static%}
+{%block title%}Home{%endblock title%}
+
+{% block banner-slider %}
+    <div id ="carouselExampleSlidesOnly" class = "carousel slide" data-bs-ride = "carousel">
+        <div class = "carousel-inner">
+            <div class = "carousel-item-active">
+                <img src = "#" class = "d-block w-100" alt = "baner image">
+            </div>
+            <div class = "carousel-item">
+                <img src = "#" class = "d-block w-100" alt = "banner image">
+            </div>
+            <div class = "carousel-item">
+                <img src = "#" class = "d-block w-100" alt = "#banner image">
+            </div>
+        </div>
+    </div>
+{% endblock banner-slider %}
+
+
+{% block information %}
+    <div class = "container">
+        <div class ="row bg-success text-center p-5 border-bottom shadow">
+            <h1>Bem-vindo!</h1>
+            <small class ="fs-5">
+                Nosso restaurante oferece uma grande variedade de pratos e lanches, aproveite nossa promoção de entrega grátis!
+            </small>
+        </div>
+    </div>
+{%endblock information%}
+
+{% block main-content %}
+<div class = "container">
+    <h2 class = "text-center">Categorias</h2>
+    <br><br>
+    <div class = "row container">
+        <div class= "col-md-4 col-sm-4 mi-go wow fadeInUp" data-wow-duration="1s"
+        data-wow-delay = "0.6s" style = "animation-duration: 1s; animation-delay: 0.6s; animation-name: none;">
+        <div class = "goodnessseccont buttermilk smgb">
+            <a href ="{%url 'category' 'PF'%}">
+                <div class = "goodnessseccont text-center">
+                    <img src="{%static 'app/images/Strogonoff.jpg' %}" class = "img-responsive center-block " alt ="">
+                    <p class = "burgerpro">Pratos Feitos</p>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class= "col-md-4 col-sm-4 mi-go wow fadeInUp" data-wow-duration="1s"
+        data-wow-delay = "0.6s" style = "animation-duration: 1s; animation-delay: 0.6s; animation-name: none;">
+        <div class = "goodnessseccont buttermilk smgb">
+            <a href ="{%url 'category' 'BG'%}">
+                <div class = "goodnessseccont text-center">
+                    <img src="{%static 'app/images/burger.avif' %}" class = "img-responsive center-block" alt ="">
+                    <p class = "burgerpro">Burgers</p>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class= "col-md-4 col-sm-4 mi-go wow fadeInUp" data-wow-duration="1s"
+        data-wow-delay = "0.6s" style = "animation-duration: 1s; animation-delay: 0.6s; animation-name: none;">
+        <div class = "goodnessseccont buttermilk smgb">
+            <a href ="{%url 'category' 'LC'%}">
+                <div class = "goodnessseccont text-center">
+                    <img src="{%static 'app/images/Batata-frita.jpg' %}" class = "img-responsive center-block" alt ="">
+                    <p class = "burgerpro">Lanches</p>
+                </div>
+            </a>
+        </div>
+    </div>
+
+       
+    </div>
+
+    <br><br>
+
+    <div class = "row container">
+        <div class= "col-md-4 col-sm-4 mi-go wow fadeInUp" data-wow-duration="1s"
+        data-wow-delay = "0.6s" style = "animation-duration: 1s; animation-delay: 0.6s; animation-name: none;">
+        <div class = "goodnessseccont buttermilk smgb">
+            <a href ="{%url 'category' 'BB'%}">
+                <div class = "goodnessseccont text-center">
+                    <img src="{%static 'app/images/bebida.jpg' %}" class = "img-responsive center-block " alt ="">
+                    <p class = "burgerpro">Bebidas</p>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class= "col-md-4 col-sm-4 mi-go wow fadeInUp" data-wow-duration="1s"
+        data-wow-delay = "0.6s" style = "animation-duration: 1s; animation-delay: 0.6s; animation-name: none;">
+        <div class = "goodnessseccont buttermilk smgb">
+            <a href ="{%url 'category' 'SM'%}">
+                <div class = "goodnessseccont text-center">
+                    <img src="{%static 'app/images/doce.avif' %}" class = "img-responsive center-block" alt ="">
+                    <p class = "burgerpro">Sobremesas</p>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    
+
+       
+    </div>
+
+</div>
+<br><br>
+
+
+    
+
+    
+<br/> <br/>
+    
+{% endblock main-content %}
