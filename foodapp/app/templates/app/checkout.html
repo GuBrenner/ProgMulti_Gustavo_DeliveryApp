@@ -29,7 +29,7 @@
         <div class = "col-sm-4 offset-sm-1">
             <h4>Selecione o endereço de entrega:</h4>
             <hr>
-            <form method="post" id="myform">
+            <form method="post" action="{%url 'place_order'%}" id="myform">
                 {% csrf_token %}
                 {% for ad in add %}
                     <div class ="card">

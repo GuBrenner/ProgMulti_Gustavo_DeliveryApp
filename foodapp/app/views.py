@@ -1,8 +1,10 @@
 
+from collections import defaultdict
+import uuid
 from django.shortcuts import render, redirect
 from urllib import request
 from django.views import View
-from . models import Cart, Customer, Product
+from . models import Cart, Customer, Product,OrderPlaced
 from django.db.models import Q
 from django.contrib import messages
 from django.contrib.auth import logout
@@ -203,3 +205,44 @@ class checkout(View):
             famount = famount + value
         totalamount = famount + 8
         return render(request, 'app/checkout.html', locals())
+    
+def place_order(request):
+    if request.method == "POST":
+        user = request.user
+        custid = request.POST.get('custid')
+        customer = Customer.objects.get(id=custid)
+
+        cart_items = Cart.objects.filter(user=user)
+        order_uid = uuid.uuid4()  # um ID único para todos os itens deste pedido
+
+        for item in cart_items:
+            OrderPlaced.objects.create(
+                user=user,
+                customer=customer,
+                product=item.product,
+                quantity=item.quantity,
+                order_id=order_uid
+            )
+            item.delete()
+
+        return redirect("orders")
+
+
+
+
+def show_orders(request):
+    all_orders = OrderPlaced.objects.filter(user=request.user).order_by('-ordered_date')
+
+    grouped_orders = defaultdict(list)
+    for order in all_orders:
+        grouped_orders[order.order_id].append(order)
+
+    # Converter para dict padrão para o template funcionar bem
+    grouped_orders = dict(grouped_orders)
+
+    return render(request, 'app/orders.html', {'grouped_orders': grouped_orders})
+
+
+#def show_orders(request):
+   # order_placed = OrderPlaced.objects.filter(user = request.user)
+   # return render(request, 'app/orders.html', locals())

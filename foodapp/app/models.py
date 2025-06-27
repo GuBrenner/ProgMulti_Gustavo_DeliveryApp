@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -41,6 +42,16 @@ STATE_CHOICES=(
         ('TO', 'Tocantins'),
 )
 
+STATUS_CHOICES=(
+    ('Aceito', 'Aceito'),
+    ('Embalado', 'Embalado'),
+    ('A caminho', 'A caminho'),
+    ('Entregue', 'Entregue'),
+    ('Cancelado', 'Cancelado'),
+    ('Pendente', 'Pendente'),
+
+)
+
 class Product(models.Model):
     title = models.CharField(max_length=100)
     selling_price = models.FloatField()
@@ -76,3 +87,17 @@ class Cart(models.Model):
     
     class Meta:
         unique_together = ('user', 'product')
+
+
+class OrderPlaced(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default = 1)
+    ordered_date = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=50, choices=STATUS_CHOICES, default='Pendente')
+    order_id = models.UUIDField(default=uuid.uuid4, editable=False, db_index=True)
+
+    @property
+    def total_cost(self):
+        return self.quantity * self.product.discounted_price

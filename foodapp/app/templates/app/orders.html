@@ -1,0 +1,72 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Pedidos{% endblock title %}
+
+{% block main-content %}
+<div class="container mt-5">
+    <div class="row">
+        <h3>Bem-vindo <span class="text-capitalize">{{ request.user }}</span></h3>
+
+        <div class="col-sm-2 border-end">
+            <ul class="list-unstyled">
+                <li class="d-grid">
+                    <a href="{% url 'orders' %}" class="btn btn-primary">Pedidos</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-sm-9 offset-sm-1">
+            {% if grouped_orders %}
+                {% for order_id, items in grouped_orders.items %}
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <strong>Pedido #{{ forloop.counter }}</strong>
+                        </div>
+                        <div class="card-body">
+                            {% for op in items %}
+                                <div class="row mb-3">
+                                    <div class="col-sm-3">
+                                        <img src="{{ op.product.product_image.url }}" class="img-fluid" alt="{{ op.product.title }}">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p>Produto: {{ op.product.title }}</p>
+                                        <p>Quantidade: {{ op.quantity }}</p>
+                                        <p>Preço R$: {{ op.total_cost }}</p>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <p>Status do pedido: {{ op.status }}</p>
+
+                                        {% if op.status == 'Aceito' %}
+                                            <div class="progress">
+                                                <div class="progress-bar" style="width: 20%"></div>
+                                            </div>
+                                        {% elif op.status == 'Embalado' %}
+                                            <div class="progress">
+                                                <div class="progress-bar bg-info" style="width: 40%"></div>
+                                            </div>
+                                        {% elif op.status == 'A caminho' %}
+                                            <div class="progress">
+                                                <div class="progress-bar bg-warning" style="width: 70%"></div>
+                                            </div>
+                                        {% elif op.status == 'Entregue' %}
+                                            <div class="progress">
+                                                <div class="progress-bar bg-success" style="width: 100%"></div>
+                                            </div>
+                                        {% elif op.status == 'Cancelado' %}
+                                            <div class="progress">
+                                                <div class="progress-bar bg-danger" style="width: 100%"></div>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>Você ainda não fez nenhum pedido.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock main-content %}
